@@ -1,0 +1,595 @@
+<meta charset="utf-8">
+<title>PayMexBTC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Pagos B2B de México a Hong Kong: SPEI en pesos, ruta por Bitcoin, liquidación en HKD o CNH vía FPS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="styles.css">
+
+<!-- ============ LANDING ============ -->
+<div id="landing">
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="wordmark" href="#inicio" aria-label="PayMexBTC, inicio">PayMex<span>BTC</span></a>
+      <nav class="nav__links" aria-label="Secciones">
+        <button type="button" class="nav__link" data-scroll="corredor">Corredor</button>
+        <button type="button" class="nav__link" data-scroll="plataforma">Plataforma</button>
+        <button type="button" class="nav__link" data-scroll="motor">Motor</button>
+        <button type="button" class="nav__link" data-scroll="legal">Marco legal</button>
+      </nav>
+      <div class="nav__end">
+        <button type="button" class="kbd-pill" data-open-palette aria-label="Abrir buscador de comandos">
+          <span class="kbd-pill__label">Buscar</span><kbd>⌘K</kbd>
+        </button>
+        <a class="btn btn--primary btn--sm" href="#pagar">Abrir plataforma</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="inicio">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Corredor MX → HK · Comercio exterior B2B</p>
+        <h1 class="display">Paga a tu fabricante en Hong Kong desde un SPEI.</h1>
+        <p class="lede">PayMexBTC recibe pesos del importador, mueve el valor por Bitcoin y deposita HKD o CNH en la cuenta del proveedor vía FPS. Cada pago queda ligado a su factura comercial, con comprobante para aduana y SAT.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#pagar">Abrir plataforma</a>
+          <button type="button" class="btn btn--ghost" data-scroll="corredor">Ver la ruta del pago</button>
+        </div>
+        <dl class="hero__facts">
+          <div><dt>Entrada</dt><dd>MXN por SPEI</dd></div>
+          <div><dt>Tránsito</dt><dd>Lightning u on-chain</dd></div>
+          <div><dt>Salida</dt><dd>HKD / CNH por FPS</dd></div>
+        </dl>
+      </div>
+
+      <form class="quote-card" id="heroQuote" aria-labelledby="hq-title" novalidate>
+        <div class="quote-card__head">
+          <span id="hq-title" class="mono-label">Cotizador</span>
+          <span class="live" aria-live="off"><span class="live__dot" aria-hidden="true"></span><span id="hqRateLabel">HKD/MXN —</span></span>
+        </div>
+        <label class="field" for="hqHkd">
+          <span class="field__label">Factura del proveedor</span>
+          <span class="field__control">
+            <span class="field__affix">HK$</span>
+            <input id="hqHkd" name="hkd" inputmode="decimal" autocomplete="off" value="480,000">
+          </span>
+        </label>
+        <div class="quote-card__rows" id="hqRows"></div>
+        <div class="quote-card__total">
+          <span>Pagas por SPEI</span>
+          <strong id="hqTotal">—</strong>
+        </div>
+        <p class="quote-card__route" id="hqRoute"></p>
+        <button class="btn btn--primary btn--block" type="submit">Fijar tipo de cambio 10 s</button>
+      </form>
+    </section>
+
+    <!-- corredor -->
+    <section class="section wrap" id="corredor" aria-labelledby="corredor-h">
+      <div class="section__head">
+        <h2 id="corredor-h" class="h2">Seis tramos, dos entidades, un solo comprobante.</h2>
+        <p class="section__lede">La entidad mexicana solo toca pesos. Bitcoin viaja entre las dos entidades del grupo. La entidad de Hong Kong solo entrega HKD o CNH. Ningún tramo deja al importador con exposición a BTC.</p>
+      </div>
+      <ol class="corridor" id="corridorList">
+        <li class="corridor__node">
+          <span class="corridor__step">SPEI</span>
+          <h3>Importador</h3>
+          <p>Transfiere pesos desde su cuenta a nombre propio. Cumple la bancarización del Art. 27 fr. III LISR.</p>
+        </li>
+        <li class="corridor__node">
+          <span class="corridor__step">MXN</span>
+          <h3>IFPE autorizada</h3>
+          <p>Recibe y dispersa pesos por instrucción del cliente. No mantiene pasivos en BTC (Circular 4/2019).</p>
+        </li>
+        <li class="corridor__node">
+          <span class="corridor__step">Mandato</span>
+          <h3>PayMex Tech, S.A. de C.V.</h3>
+          <p>Ejecuta la comisión mercantil: compra activo virtual por cuenta del importador. Sujeto obligado LFPIORPI.</p>
+        </li>
+        <li class="corridor__node corridor__node--btc">
+          <span class="corridor__step">BTC</span>
+          <h3>Red Bitcoin</h3>
+          <p>Lightning para montos que caben en canales; Taproot MuSig2 on-chain para lotes grandes. Travel Rule cifrada adjunta.</p>
+        </li>
+        <li class="corridor__node">
+          <span class="corridor__step">MSO · VASP</span>
+          <h3>PayMex Asia Limited</h3>
+          <p>Permuta BTC por HKD o CNH bajo AMLO Cap. 615, Partes 5 y 5B.</p>
+        </li>
+        <li class="corridor__node">
+          <span class="corridor__step">FPS</span>
+          <h3>Fabricante</h3>
+          <p>Recibe en su cuenta bancaria en Hong Kong, referenciado a su Commercial Invoice.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- plataforma -->
+    <section class="section wrap" id="plataforma" aria-labelledby="plat-h">
+      <div class="section__head">
+        <h2 id="plat-h" class="h2">La plataforma, módulo por módulo.</h2>
+        <p class="section__lede">Cada módulo corre en vivo en esta misma página. Ábrelo y opera.</p>
+      </div>
+      <div class="tour">
+        <a class="tour__row" href="#pagar">
+          <span class="tour__name">Pagar a proveedor</span>
+          <span class="tour__what">Cotización con candado de 10 s, elección de ruta por costo mínimo y seguimiento de cada estado hasta HKD liquidado.</span>
+          <span class="tour__model">Flujo a costo mínimo · FSM · Dijkstra en Lightning</span>
+          <span class="tour__go" aria-hidden="true">→</span>
+        </a>
+        <a class="tour__row" href="#tesoreria">
+          <span class="tour__name">Tesorería</span>
+          <span class="tour__what">Posiciones por bóveda, punto de reorden de BTC caliente, VaR al 99% y firma de retiros con custodia 2 de 3.</span>
+          <span class="tour__model">Inventario (s, S) · GBM / Itô · Shamir + Lagrange · Bellman-Ford</span>
+          <span class="tour__go" aria-hidden="true">→</span>
+        </a>
+        <a class="tour__row" href="#cumplimiento">
+          <span class="tour__name">Cumplimiento</span>
+          <span class="tour__what">Expediente KYB, riesgo bayesiano por operación, congelamiento automático y avisos a la UIF con fecha límite.</span>
+          <span class="tour__model">Bayes ingenuo · umbral 0.75 · Travel Rule FATF R.16</span>
+          <span class="tour__go" aria-hidden="true">→</span>
+        </a>
+        <a class="tour__row" href="#comprobantes">
+          <span class="tour__name">Comprobantes</span>
+          <span class="tour__what">Comprobante de liquidación con hash y ruta Merkle, CFDI de la comisión y factor de actualización INPC.</span>
+          <span class="tour__model">Double-SHA256 · SPV O(log k) · LISR</span>
+          <span class="tour__go" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- motor: the graphite band -->
+    <section class="band" id="motor" aria-labelledby="motor-h">
+      <div class="wrap band__in">
+        <div class="section__head section__head--band">
+          <h2 id="motor-h" class="h2">El motor es matemática que se puede verificar.</h2>
+          <p class="section__lede">Cinco piezas del protocolo sostienen la custodia y la liquidación. Mueve los controles: los números se calculan aquí, no se ilustran.</p>
+        </div>
+
+        <div class="nakamoto">
+          <div class="nakamoto__copy">
+            <h3 class="h3">Probabilidad de reversión tras <em class="mono">z</em> confirmaciones</h3>
+            <p>Antes de autorizar el embarque, el motor de riesgo calcula la probabilidad de que un atacante con fracción <span class="mono">q</span> del poder de cómputo reescriba la cadena (modelo de Nakamoto, Poisson).</p>
+            <div class="slider">
+              <label for="nkQ">Fracción del atacante <span class="mono" id="nkQv">q = 0.10</span></label>
+              <input type="range" id="nkQ" min="0.01" max="0.45" step="0.01" value="0.10">
+            </div>
+            <div class="slider">
+              <label for="nkZ">Confirmaciones <span class="mono" id="nkZv">z = 6</span></label>
+              <input type="range" id="nkZ" min="0" max="12" step="1" value="6">
+            </div>
+            <p class="nakamoto__out"><span class="mono-label">P(z)</span> <strong class="mono" id="nkP">—</strong></p>
+            <p class="nakamoto__note" id="nkNote"></p>
+          </div>
+          <figure class="nakamoto__chart" aria-label="Curva de P(z) contra confirmaciones, escala logarítmica">
+            <svg id="nkSvg" viewBox="0 0 420 240" role="img"></svg>
+            <figcaption class="mono-label">log₁₀ P(z) · z = 0 … 12</figcaption>
+          </figure>
+        </div>
+
+        <div class="pillars">
+          <article class="pillar">
+            <h3 class="h3">secp256k1 sobre 𝔽<sub>p</sub></h3>
+            <pre class="formula">y² ≡ x³ + 7  (mod p)
+p = 2²⁵⁶ − 2³² − 977
+Q = d · G</pre>
+            <p>Recuperar <span class="mono">d</span> desde <span class="mono">Q</span> cuesta del orden de 2¹²⁸ operaciones (Pollard rho).</p>
+          </article>
+          <article class="pillar">
+            <h3 class="h3">Schnorr + MuSig2</h3>
+            <pre class="formula">s = k + H(R ‖ Q ‖ m) · d  (mod n)
+s·G = R + H(R ‖ Q ‖ m) · Q</pre>
+            <p>Importador, proveedor y árbitro de inspección firman como una sola llave. Las condiciones del contrato quedan en hojas MAST de Taproot.</p>
+          </article>
+          <article class="pillar">
+            <h3 class="h3">HTLC en Lightning</h3>
+            <pre class="formula">Φ = (SHA256(x) = H ∧ Sig_HK)
+  ∨ (t > T_lock ∧ Sig_PayMex)</pre>
+            <p>El proveedor cobra al revelar la preimagen. Si no la revela antes de <span class="mono">T_lock</span>, los fondos regresan.</p>
+          </article>
+          <article class="pillar">
+            <h3 class="h3">Merkle + SPV</h3>
+            <pre class="formula">H(x) = SHA256(SHA256(x))
+h(i,j) = H(h(i−1,2j) ‖ h(i−1,2j+1))</pre>
+            <p>El proveedor verifica que su pago está en un bloque con log₂ k hashes, sin descargar la cadena.</p>
+          </article>
+        </div>
+
+        <details class="models">
+          <summary><span>Quince modelos operativos detrás de los módulos</span><span class="models__hint mono-label">Expandir</span></summary>
+          <div class="models__scroll">
+            <table class="models__table">
+              <thead><tr><th scope="col">Técnica</th><th scope="col">Uso en PayMexBTC</th><th scope="col">Módulo</th></tr></thead>
+              <tbody>
+                <tr><td>Colas M(t)/M/1, Poisson no homogéneo</td><td>Emparejamiento interno de órdenes MXN → BTC</td><td>Pagar</td></tr>
+                <tr><td>Movimiento browniano geométrico, lema de Itô</td><td>VaR 99% y spread dinámico durante la ventana de liquidación</td><td>Tesorería</td></tr>
+                <tr><td>Bellman-Ford sobre −ln(r·(1−c))</td><td>Ruta de conversión más barata MXN, BTC, USDT, HKD</td><td>Tesorería</td></tr>
+                <tr><td>Flujo a costo mínimo</td><td>Lightning, on-chain o híbrido según monto</td><td>Pagar</td></tr>
+                <tr><td>Impacto de mercado √(Q/V), Newton-Raphson</td><td>Precio OTC para lotes mayores a USD 20,000</td><td>Pagar</td></tr>
+                <tr><td>Equilibrio de Nash perfecto en subjuegos</td><td>Escrow con colateral: Π &gt; C<sub>producción</sub></td><td>Pagar</td></tr>
+                <tr><td>Inventario (s, S) con demanda normal</td><td>Punto de reorden de BTC en bóveda caliente</td><td>Tesorería</td></tr>
+                <tr><td>Autómata finito determinista</td><td>Estados INIT → HKD_SETTLED con autorización booleana</td><td>Pagar</td></tr>
+                <tr><td>Factor de actualización INPC</td><td>Costo actualizado y ganancia gravable ante el SAT</td><td>Comprobantes</td></tr>
+                <tr><td>Control PID discreto</td><td>Margen de seguridad del candado de cotización</td><td>Pagar</td></tr>
+                <tr><td>Shamir (t, n) e interpolación de Lagrange</td><td>Custodia MPC sin llave completa en ninguna persona</td><td>Tesorería</td></tr>
+                <tr><td>Mínimos cuadrados con penalización L1</td><td>Rebalanceo entre nodos con pocas transacciones on-chain</td><td>Tesorería</td></tr>
+                <tr><td>Dijkstra modificado con −η ln p(a)</td><td>Ruta Lightning por probabilidad de entrega</td><td>Pagar</td></tr>
+                <tr><td>SARIMA + LSTM</td><td>Prefondeo de liquidez en Hong Kong con 15 días de antelación</td><td>Tesorería</td></tr>
+                <tr><td>Clasificador bayesiano ingenuo</td><td>Riesgo de operación ilícita y congelamiento &gt; 0.75</td><td>Cumplimiento</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- legal -->
+    <section class="section wrap" id="legal" aria-labelledby="legal-h">
+      <div class="section__head">
+        <h2 id="legal-h" class="h2">Doble entidad, permuta mercantil.</h2>
+        <p class="section__lede">Bitcoin no es moneda de curso legal ni divisa en México (Art. 30 Ley Fintech). Usarlo como vehículo de valor convierte el pago en una permuta ejecutada por comisión mercantil, no en una operación cambiaria.</p>
+      </div>
+      <div class="entities">
+        <article class="entity">
+          <p class="mono-label">México</p>
+          <h3 class="h3">PayMex Tech, S.A. de C.V.</h3>
+          <ul>
+            <li>Plataforma tecnológica y gestión de activos virtuales.</li>
+            <li>Actividad vulnerable, Art. 17 fr. XVI LFPIORPI.</li>
+            <li>Recibe pesos a través de una IFPE autorizada por CNBV y Banxico.</li>
+            <li>CFDI de ingresos solo por su comisión, con IVA al 16%.</li>
+          </ul>
+        </article>
+        <article class="entity">
+          <p class="mono-label">Hong Kong</p>
+          <h3 class="h3">PayMex Asia Limited</h3>
+          <ul>
+            <li>Constituida bajo Companies Ordinance, Cap. 622.</li>
+            <li>Money Service Operator ante Customs and Excise.</li>
+            <li>Régimen VASP de la SFC, AMLO Cap. 615 Parte 5B.</li>
+            <li>Dispersión en HKD o CNH por FPS de la HKMA.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="law-scroll">
+        <table class="law">
+          <thead><tr><th scope="col">Fundamento</th><th scope="col">Qué exige</th><th scope="col">Cómo lo resuelve la plataforma</th></tr></thead>
+          <tbody>
+            <tr><td>Ley Fintech, Arts. 22, 30, 31 y 32</td><td>Activos virtuales no son divisa; ITF requiere autorización de Banxico para operarlos.</td><td>La IFPE solo mueve pesos. La operación con BTC la ejecuta PayMex Tech como comisionista.</td></tr>
+            <tr><td>Circular 4/2019 Banxico</td><td>Sin custodia ni inversión de BTC al público desde entidades financieras.</td><td>El importador nunca tiene saldo en BTC. Recibe una liquidación en HKD.</td></tr>
+            <tr><td>LFPIORPI, Arts. 17 fr. XVI y 18</td><td>Alta en el portal PLD del SAT, expediente KYC/KYB, resguardo 5 años, avisos el día 17.</td><td>Módulo Cumplimiento: expediente, umbral en UMA y calendario de avisos.</td></tr>
+            <tr><td>CCF Art. 2327; CCom Arts. 75 y 273</td><td>Permuta y comisión mercantil.</td><td>Contrato de mandato firmado en el alta del importador.</td></tr>
+            <tr><td>Ley Aduanera, Arts. 36-A y 59</td><td>Pedimento, factura comercial y manifestación de valor con pago acreditado.</td><td>Comprobante de liquidación ligado a la factura, al hash y a la referencia FPS.</td></tr>
+            <tr><td>LISR Art. 27 fr. III; RMF 2.7.1.12</td><td>Pagos mayores a $2,000 bancarizados; pagos por cuenta de terceros.</td><td>SPEI desde cuenta del importador. El principal se registra por cuenta de terceros.</td></tr>
+            <tr><td>AMLO Cap. 615, Partes 5 y 5B; FATF R.16</td><td>Licencia MSO, VASP y Travel Rule.</td><td>Datos del ordenante cifrados y enviados con cada transferencia entre entidades.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- faq -->
+    <section class="section wrap" id="preguntas" aria-labelledby="faq-h">
+      <div class="section__head">
+        <h2 id="faq-h" class="h2">Lo que pregunta un inversionista.</h2>
+      </div>
+      <div class="faq">
+        <details><summary>¿Quién asume el riesgo de precio de BTC?</summary><p>La tesorería de PayMexBTC, durante minutos. El importador fija un tipo MXN → HKD por 10 segundos y paga ese monto. El spread se calcula con el VaR al 99% del horizonte de la ruta elegida, por eso Lightning cotiza más estrecho que on-chain.</p></details>
+        <details><summary>¿Dónde están las llaves?</summary><p>En ningún lugar completas. La tesorería usa un esquema 2 de 3: un fragmento en México, otro en Hong Kong y uno frío de recuperación. La firma se calcula con coeficientes de Lagrange sin reconstruir la llave.</p></details>
+        <details><summary>¿Qué pasa si el fabricante no entrega?</summary><p>Los anticipos por Lightning van en HTLC con tiempo de expiración. Para lotes grandes, el escrow Taproot exige que el colateral del proveedor supere su costo de producción, así cumplir es la mejor estrategia.</p></details>
+        <details><summary>¿Cómo deduce el importador la compra?</summary><p>Pagó por SPEI desde su cuenta, y recibe un comprobante de liquidación que liga su pedimento con la factura comercial, el hash de la transacción y la referencia FPS. PayMex Tech factura solo su comisión.</p></details>
+        <details><summary>¿Qué detiene un pago sospechoso?</summary><p>Un clasificador bayesiano evalúa cada operación con evidencia on-chain y transaccional. Por encima de 0.75 la operación se congela antes de salir y se prepara el reporte de operación inusual.</p></details>
+      </div>
+    </section>
+
+    <section class="cta wrap" aria-labelledby="cta-h">
+      <h2 id="cta-h" class="h2">Cotiza un pago real de factura y síguelo hasta Hong Kong.</h2>
+      <a class="btn btn--primary" href="#pagar">Abrir plataforma</a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <span class="wordmark wordmark--sm">PayMex<span>BTC</span></span>
+      <span class="foot__line">PayMex Tech, S.A. de C.V. · PayMex Asia Limited</span>
+      <span class="foot__line mono">MXN → BTC → HKD</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" hidden>
+  <header class="topbar">
+    <div class="topbar__in">
+      <a class="wordmark" href="#inicio" aria-label="PayMexBTC, volver al inicio">PayMex<span>BTC</span></a>
+      <div class="ticker" aria-label="Tipos de referencia en vivo">
+        <span><span class="mono-label">BTC/MXN</span> <b class="mono" id="tkBtcMxn">—</b></span>
+        <span><span class="mono-label">BTC/HKD</span> <b class="mono" id="tkBtcHkd">—</b></span>
+        <span><span class="mono-label">HKD/MXN</span> <b class="mono" id="tkHkdMxn">—</b></span>
+        <span class="tk-fee"><span class="mono-label">Fee</span> <b class="mono" id="tkFee">—</b></span>
+      </div>
+      <div class="topbar__end">
+        <button type="button" class="kbd-pill" data-open-palette aria-label="Abrir buscador de comandos"><span class="kbd-pill__label">Buscar</span><kbd>⌘K</kbd></button>
+        <span class="org"><span class="org__name">Textiles Altamira, S.A. de C.V.</span><span class="chip chip--ok">KYB vigente</span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <nav class="side" aria-label="Módulos">
+      <a class="side__link" href="#pagar" data-view="pagar"><span class="side__ico" aria-hidden="true">↗</span>Pagar a proveedor</a>
+      <a class="side__link" href="#tesoreria" data-view="tesoreria"><span class="side__ico" aria-hidden="true">◫</span>Tesorería</a>
+      <a class="side__link" href="#cumplimiento" data-view="cumplimiento"><span class="side__ico" aria-hidden="true">◇</span>Cumplimiento <span class="side__badge" id="frozenBadge" hidden>1</span></a>
+      <a class="side__link" href="#comprobantes" data-view="comprobantes"><span class="side__ico" aria-hidden="true">≡</span>Comprobantes</a>
+    </nav>
+
+    <main class="view-host">
+      <!-- PAGAR -->
+      <section class="view" id="view-pagar" aria-labelledby="vp-h" hidden>
+        <div class="view__head">
+          <h1 id="vp-h" class="h2">Pagar a proveedor</h1>
+          <p class="view__sub">Captura la factura en HKD o CNH. Cotiza, fija y envía.</p>
+        </div>
+
+        <div class="pay">
+          <form class="panel pay__form" id="payForm" novalidate>
+            <h2 class="panel__title">Orden de pago</h2>
+            <label class="field" for="pfSupplier">
+              <span class="field__label">Proveedor</span>
+              <select id="pfSupplier" class="select"></select>
+            </label>
+            <p class="supplier-meta mono" id="pfSupplierMeta"></p>
+            <label class="field" for="pfInvoice">
+              <span class="field__label">Commercial Invoice</span>
+              <input id="pfInvoice" class="input" autocomplete="off" value="HL-2026-11-0418">
+            </label>
+            <div class="field-row">
+              <label class="field" for="pfAmount">
+                <span class="field__label">Monto de la factura</span>
+                <span class="field__control">
+                  <span class="field__affix" id="pfAffix">HK$</span>
+                  <input id="pfAmount" inputmode="decimal" autocomplete="off" value="480,000">
+                </span>
+              </label>
+              <fieldset class="seg" aria-label="Moneda de liquidación">
+                <legend class="field__label">Liquidar en</legend>
+                <div class="seg__opts">
+                  <input type="radio" name="ccy" id="ccyHkd" value="HKD" checked><label for="ccyHkd">HKD</label>
+                  <input type="radio" name="ccy" id="ccyCnh" value="CNH"><label for="ccyCnh">CNH</label>
+                </div>
+              </fieldset>
+            </div>
+            <p class="field__error" id="pfError" role="alert" hidden></p>
+            <button class="btn btn--primary btn--block" type="submit" id="pfQuoteBtn">Cotizar</button>
+          </form>
+
+          <div class="panel pay__quote" id="quotePanel" aria-live="polite">
+            <div class="empty" id="quoteEmpty">
+              <p class="mono-label">Sin cotización activa</p>
+              <p>Captura la factura y pulsa Cotizar. El tipo de cambio queda fijo 10 segundos.</p>
+            </div>
+            <div id="quoteBody" hidden>
+              <div class="quote-top">
+                <div>
+                  <p class="mono-label">Pagas por SPEI</p>
+                  <p class="quote-total mono" id="qTotal">—</p>
+                  <p class="quote-receive" id="qReceive"></p>
+                </div>
+                <div class="lock" id="lock">
+                  <svg viewBox="0 0 44 44" class="lock__ring" aria-hidden="true"><circle cx="22" cy="22" r="19" class="lock__track"/><circle cx="22" cy="22" r="19" class="lock__bar" id="lockBar"/></svg>
+                  <span class="lock__n mono" id="lockN">10</span>
+                  <span class="lock__label mono-label">Candado</span>
+                </div>
+              </div>
+              <dl class="breakdown" id="qBreak"></dl>
+              <h3 class="panel__sub">Ruta por costo mínimo</h3>
+              <div class="table-scroll"><table class="routes" id="qRoutes"></table></div>
+              <h3 class="panel__sub">Autorización</h3>
+              <p class="auth mono" id="qAuth"></p>
+              <div class="quote-actions">
+                <button type="button" class="btn btn--primary" id="qConfirm">Confirmar y generar SPEI</button>
+                <button type="button" class="btn btn--ghost" id="qRequote" hidden>Recotizar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel track" id="trackPanel" hidden aria-live="polite">
+          <div class="track__head">
+            <div>
+              <h2 class="panel__title" id="trackTitle">Operación</h2>
+              <p class="mono track__id" id="trackId"></p>
+            </div>
+            <span class="chip" id="trackChip">INIT</span>
+          </div>
+          <ol class="fsm" id="fsm"></ol>
+          <div class="spei" id="speiBox" hidden></div>
+          <ol class="log mono" id="trackLog"></ol>
+          <div class="track__done" id="trackDone" hidden>
+            <a class="btn btn--primary" href="#comprobantes" id="trackReceipt">Ver comprobante</a>
+            <button type="button" class="btn btn--ghost" id="trackNew">Nueva orden</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 class="panel__title">Operaciones recientes</h2>
+          <div class="table-scroll"><table class="ops" id="opsTable"></table></div>
+        </div>
+      </section>
+
+      <!-- TESORERIA -->
+      <section class="view" id="view-tesoreria" aria-labelledby="vt-h" hidden>
+        <div class="view__head">
+          <h1 id="vt-h" class="h2">Tesorería</h1>
+          <p class="view__sub">Posiciones del grupo, riesgo de precio y custodia.</p>
+        </div>
+        <div class="positions" id="positions"></div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel__row">
+              <h2 class="panel__title">BTC/MXN y banda VaR 99%</h2>
+              <span class="mono-label" id="chartLabel"></span>
+            </div>
+            <svg id="priceSvg" class="chart" viewBox="0 0 640 240" role="img" aria-label="Precio BTC/MXN con banda de VaR"></svg>
+            <div class="var-ctl">
+              <div class="slider">
+                <label for="varSigma">Volatilidad anual σ <span class="mono" id="varSigmaV"></span></label>
+                <input type="range" id="varSigma" min="0.2" max="1.2" step="0.01" value="0.55">
+              </div>
+              <div class="slider">
+                <label for="varH">Horizonte <span class="mono" id="varHV"></span></label>
+                <input type="range" id="varH" min="1" max="120" step="1" value="60">
+              </div>
+            </div>
+            <dl class="kv" id="varOut"></dl>
+          </div>
+
+          <div class="panel">
+            <h2 class="panel__title">Punto de reorden, bóveda caliente</h2>
+            <p class="panel__note mono">s = μ<sub>D</sub>·L + z<sub>α</sub>·σ<sub>D</sub>·√L</p>
+            <div class="slider"><label for="invMu"><span>Demanda media μ<sub>D</sub></span> <span class="mono" id="invMuV"></span></label><input type="range" id="invMu" min="0.05" max="1.5" step="0.01" value="0.42"></div>
+            <div class="slider"><label for="invSd"><span>Desviación σ<sub>D</sub></span> <span class="mono" id="invSdV"></span></label><input type="range" id="invSd" min="0.01" max="0.8" step="0.01" value="0.18"></div>
+            <div class="slider"><label for="invL"><span>Tiempo de reposición L</span> <span class="mono" id="invLV"></span></label><input type="range" id="invL" min="1" max="24" step="1" value="6"></div>
+            <fieldset class="seg" aria-label="Nivel de servicio">
+              <legend class="field__label">Nivel de servicio</legend>
+              <div class="seg__opts">
+                <input type="radio" name="sl" id="sl99" value="2.326"><label for="sl99">99%</label>
+                <input type="radio" name="sl" id="sl999" value="3.090" checked><label for="sl999">99.9%</label>
+                <input type="radio" name="sl" id="sl9999" value="3.719"><label for="sl9999">99.99%</label>
+              </div>
+            </fieldset>
+            <div class="gauge" id="invGauge"></div>
+            <button type="button" class="btn btn--ghost btn--sm" id="invRefill" hidden>Programar reposición desde bóveda fría</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h2 class="panel__title">Firma de retiro, custodia 2 de 3</h2>
+            <p class="panel__note">Elige dos fragmentos. La firma combina sus aportes con coeficientes de Lagrange; la llave completa nunca existe en un solo lugar.</p>
+            <div class="shares" id="shares"></div>
+            <div class="mpc-out mono" id="mpcOut"></div>
+            <button type="button" class="btn btn--primary btn--sm" id="mpcSign" disabled>Firmar retiro · 2.00 BTC</button>
+          </div>
+          <div class="panel">
+            <h2 class="panel__title">Ruta de conversión, Bellman-Ford</h2>
+            <p class="panel__note mono">w(u,v) = −ln(r<sub>uv</sub> · (1 − c<sub>uv</sub>))</p>
+            <div class="bf-path" id="bfPath"></div>
+            <div class="table-scroll"><table class="edges" id="bfEdges"></table></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CUMPLIMIENTO -->
+      <section class="view" id="view-cumplimiento" aria-labelledby="vc-h" hidden>
+        <div class="view__head">
+          <h1 id="vc-h" class="h2">Cumplimiento</h1>
+          <p class="view__sub">KYB, riesgo por operación y obligaciones ante la UIF.</p>
+        </div>
+
+        <div class="grid-2 grid-2--wide-left">
+          <div class="panel">
+            <div class="panel__row">
+              <h2 class="panel__title">Evaluador bayesiano</h2>
+              <select id="bayesOp" class="select select--sm" aria-label="Operación a evaluar"></select>
+            </div>
+            <p class="panel__note">Activa la evidencia observada. La probabilidad posterior se recalcula con cada cambio.</p>
+            <ul class="evidence" id="evidence"></ul>
+            <div class="posterior" id="posterior">
+              <div class="posterior__bar"><span id="postFill"></span><i class="posterior__thr" aria-hidden="true"></i></div>
+              <div class="posterior__row">
+                <span class="mono-label">P(ilícito | E)</span>
+                <strong class="mono" id="postVal">—</strong>
+              </div>
+              <p class="posterior__verdict" id="postVerdict"></p>
+              <button type="button" class="btn btn--danger btn--sm" id="postFreeze" hidden>Congelar y preparar reporte a la UIF</button>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <h2 class="panel__title">Expediente KYB</h2>
+              <p class="mono kyb-name">Textiles Altamira, S.A. de C.V.</p>
+              <ul class="checklist" id="kyb"></ul>
+            </div>
+            <div class="panel">
+              <h2 class="panel__title">Avisos a la UIF</h2>
+              <label class="field" for="umaVal">
+                <span class="field__label">UMA diaria vigente</span>
+                <span class="field__control"><span class="field__affix">$</span><input id="umaVal" inputmode="decimal" value="113.14"></span>
+              </label>
+              <dl class="kv" id="uifOut"></dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 class="panel__title">Cola de revisión</h2>
+          <div class="table-scroll"><table class="ops" id="queueTable"></table></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__row">
+            <h2 class="panel__title">Travel Rule, mensaje entre entidades</h2>
+            <span class="chip chip--accent">FATF R.16</span>
+          </div>
+          <pre class="code" id="travelRule"></pre>
+        </div>
+      </section>
+
+      <!-- COMPROBANTES -->
+      <section class="view" id="view-comprobantes" aria-labelledby="vr-h" hidden>
+        <div class="view__head">
+          <h1 id="vr-h" class="h2">Comprobantes</h1>
+          <p class="view__sub">Liquidación internacional, CFDI de la comisión y efecto fiscal.</p>
+        </div>
+        <div class="grid-2 grid-2--wide-left">
+          <div class="panel">
+            <div class="panel__row">
+              <h2 class="panel__title">Comprobante de Liquidación Internacional</h2>
+              <select id="rcOp" class="select select--sm" aria-label="Operación"></select>
+            </div>
+            <div id="receipt" class="receipt"></div>
+          </div>
+          <div class="stack">
+            <div class="panel">
+              <h2 class="panel__title">Verificación SPV</h2>
+              <p class="panel__note">Ruta Merkle del pago dentro de su bloque, verificada aquí con Double-SHA256.</p>
+              <ol class="merkle mono" id="merkle"></ol>
+              <p class="merkle__ok" id="merkleOk"></p>
+            </div>
+            <div class="panel">
+              <h2 class="panel__title">Actualización INPC</h2>
+              <p class="panel__note mono">F = INPC<sub>t₁−1</sub> / INPC<sub>t₀</sub> · G = V − C·max(1, F)</p>
+              <div class="field-grid">
+                <label class="field" for="inC"><span class="field__label">Costo de adquisición</span><input id="inC" class="input" inputmode="decimal"></label>
+                <label class="field" for="inV"><span class="field__label">Valor de enajenación</span><input id="inV" class="input" inputmode="decimal"></label>
+                <label class="field" for="in0"><span class="field__label">INPC mes de adquisición</span><input id="in0" class="input" inputmode="decimal" value="142.370"></label>
+                <label class="field" for="in1"><span class="field__label">INPC mes anterior al pago</span><input id="in1" class="input" inputmode="decimal" value="142.904"></label>
+              </div>
+              <dl class="kv" id="inpcOut"></dl>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- ============ COMMAND PALETTE ============ -->
+<div class="palette" id="palette" hidden>
+  <div class="palette__scrim" data-close-palette></div>
+  <div class="palette__box" role="dialog" aria-modal="true" aria-labelledby="palLabel">
+    <label id="palLabel" class="sr-only" for="palInput">Buscar comando</label>
+    <input id="palInput" class="palette__input" placeholder="Ir a módulo, cotizar, ver comprobante…" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="palList">
+    <ul id="palList" class="palette__list" role="listbox"></ul>
+    <p class="palette__foot mono-label">↑ ↓ elegir · Enter abrir · Esc cerrar</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="app.js"></script>
