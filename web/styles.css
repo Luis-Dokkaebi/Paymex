@@ -108,10 +108,13 @@ kbd {
 }
 .nav__in { display: flex; align-items: center; gap: var(--space-md); min-height: 60px; }
 .wordmark {
+  display: inline-flex; align-items: center; gap: 0.45em;
   font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; letter-spacing: -0.02em;
   color: var(--color-ink); text-decoration: none; white-space: nowrap;
 }
-.wordmark span { color: var(--color-accent); }
+.wordmark__mark { width: auto; height: 1.4em; aspect-ratio: 576 / 776; flex: none; fill: currentColor; }
+.wordmark__text { color: inherit; }
+.wordmark__text span { color: var(--color-accent); }
 .wordmark--sm { font-size: 1rem; }
 .nav__links { display: none; gap: var(--space-3xs); }
 .nav__link {
